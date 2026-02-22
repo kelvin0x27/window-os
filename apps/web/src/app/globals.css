@@ -1,0 +1,358 @@
+@import "tailwindcss";
+@source "../../../../packages/ui/src/**/*.{ts,tsx}";
+@source "../../../../packages/built-in-apps/src/**/*.{ts,tsx}";
+
+/* 
+  MULTI-OS THEME ARCHITECTURE 
+  These tokens define exactly how components look across different operating systems 
+  and light/dark modes. UI components should ONLY use semantic mapping like 
+  `bg-os-surface` or `rounded-window` instead of hard-coded colors.
+*/
+
+/* ===== Windows 11 (Default Dark) ===== */
+:root[data-os-theme="win11"][data-theme="dark"] {
+  --os-accent: #0078d4;
+  --os-accent-hover: #1a86d9;
+  --os-surface: #202020;
+  /* Base app background */
+  --os-surface-card: #2d2d2d;
+  /* Elevated cards (Settings, etc) */
+  --os-surface-flyout: #2c2c2c;
+  /* Taskbar flyout popups */
+  --os-surface-stroke: rgba(255, 255, 255, 0.08);
+  --os-text: #ffffff;
+  --os-text-secondary: #9a9a9a;
+  --os-border: rgba(255, 255, 255, 0.08);
+  --os-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+  --os-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  --os-mica-bg: rgba(32, 32, 32, 0.8);
+  --os-acrylic-bg: rgba(44, 44, 44, 0.85);
+
+  --os-titlebar: #2d2d2d;
+  --os-titlebar-text: #ffffff;
+  --os-sidebar: #252525;
+
+  --os-hover: rgba(255, 255, 255, 0.06);
+  --os-active: rgba(255, 255, 255, 0.04);
+  --os-selected: rgba(0, 120, 212, 0.2);
+
+  --os-close-btn: #c42b1c;
+
+  /* Structure */
+  --os-radius-window: 8px;
+  --os-radius-element: 4px;
+  --os-radius-flyout: 8px;
+  --taskbar-height: 48px;
+}
+
+/* ===== Windows 11 (Light) ===== */
+:root[data-os-theme="win11"][data-theme="light"] {
+  --os-accent: #0078d4;
+  --os-accent-hover: #1a86d9;
+  --os-surface: #f3f3f3;
+  --os-surface-card: #ffffff;
+  --os-surface-flyout: #f3f3f3;
+  --os-surface-stroke: rgba(0, 0, 0, 0.08);
+  --os-text: #000000;
+  --os-text-secondary: #5d5d5d;
+  --os-border: rgba(0, 0, 0, 0.08);
+  /* Faint gray */
+  --os-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --os-shadow-flyout: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --os-mica-bg: rgba(243, 243, 243, 0.8);
+  --os-acrylic-bg: rgba(255, 255, 255, 0.85);
+  --os-titlebar: #ffffff;
+  --os-titlebar-text: #000000;
+  --os-sidebar: #f3f3f3;
+  --os-hover: rgba(0, 0, 0, 0.04);
+  --os-active: rgba(0, 0, 0, 0.02);
+  --os-selected: rgba(0, 120, 212, 0.1);
+  --os-close-btn: #c42b1c;
+  --os-radius-window: 8px;
+  --os-radius-element: 4px;
+  --os-radius-flyout: 8px;
+  --taskbar-height: 48px;
+}
+
+/* ===== Windows XP (Silver/Blue) ===== */
+:root[data-os-theme="winxp"] {
+  --os-accent: #245edb;
+  /* Luna blue */
+  --os-accent-hover: #1c4bb0;
+  --os-surface: #ece9d8;
+  /* WinXP dialog bg */
+  --os-surface-card: #ffffff;
+  --os-surface-flyout: #ece9d8;
+  --os-surface-stroke: #7f9db9;
+  /* Control border */
+  --os-text: #000000;
+  --os-text-secondary: #555555;
+  --os-border: #0054e3;
+  /* Window border */
+  --os-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  --os-shadow-flyout: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  --os-mica-bg: #ece9d8;
+  /* No transparency on XP */
+  --os-acrylic-bg: #ece9d8;
+  --os-titlebar: linear-gradient(180deg, #0058e6 0%, #3a93ff 20%, #288eff 80%, #1774e6 100%);
+  --os-titlebar-text: #ffffff;
+  --os-sidebar: #7ba2e7;
+  --os-hover: #316ac5;
+  --os-active: #22519c;
+  --os-selected: #316ac5;
+  --os-close-btn: #e55541;
+  /* XP Red button */
+
+  /* Structure */
+  --os-radius-window: 8px 8px 0 0;
+  /* Only top corners */
+  --os-radius-element: 0px;
+  /* Sharp buttons */
+  --os-radius-flyout: 0px;
+  --taskbar-height: 30px;
+}
+
+/* Map the raw CSS variables into semantic Tailwind Design Tokens */
+@theme inline {
+  --color-os-accent: var(--os-accent);
+  --color-os-accent-hover: var(--os-accent-hover);
+  --color-os-surface: var(--os-surface);
+  --color-os-surface-card: var(--os-surface-card);
+  --color-os-surface-flyout: var(--os-surface-flyout);
+  --color-os-surface-stroke: var(--os-surface-stroke);
+  --color-os-text: var(--os-text);
+  --color-os-text-secondary: var(--os-text-secondary);
+  --color-os-border: var(--os-border);
+  --color-os-mica: var(--os-mica-bg);
+  --color-os-acrylic: var(--os-acrylic-bg);
+  --color-os-titlebar: var(--os-titlebar);
+  --color-os-titlebar-text: var(--os-titlebar-text);
+  --color-os-sidebar: var(--os-sidebar);
+  --color-os-hover: var(--os-hover);
+  --color-os-active: var(--os-active);
+  --color-os-selected: var(--os-selected);
+  --color-os-close-btn: var(--os-close-btn);
+
+  --shadow-os: var(--os-shadow);
+  --shadow-os-flyout: var(--os-shadow-flyout);
+
+  --radius-os-window: var(--os-radius-window);
+  --radius-os-elm: var(--os-radius-element);
+  --radius-os-flyout: var(--os-radius-flyout);
+
+  --font-os: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-os);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #000;
+}
+
+/* Windows 11 thin scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ===== Window State Overrides ===== */
+/* Bypasses react-rnd inline styles when maximized */
+.os-window-maximized {
+  width: 100vw !important;
+  height: calc(100vh - var(--taskbar-height)) !important;
+  transform: translate(0px, 0px) !important;
+  border-radius: 0 !important;
+}
+
+/* ===== Boot Screen Animations ===== */
+
+.boot-screen-container {
+  animation: bootFadeOut 0.6s ease-in 2.8s forwards;
+}
+
+.boot-logo-fade-in {
+  animation: logoFadeIn 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bootFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+/* Windows 11 Boot Spinner */
+.boot-spinner {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  animation: bootSpinnerRotate 1.8s linear infinite;
+}
+
+.boot-spinner-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #0078d4;
+}
+
+.boot-spinner-dot:nth-child(1) {
+  top: 0;
+  left: 14px;
+  animation: bootDotAnim 1.8s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.boot-spinner-dot:nth-child(2) {
+  top: 4px;
+  right: 2px;
+  animation: bootDotAnim 1.8s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+.boot-spinner-dot:nth-child(3) {
+  bottom: 4px;
+  right: 2px;
+  animation: bootDotAnim 1.8s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.boot-spinner-dot:nth-child(4) {
+  bottom: 4px;
+  left: 2px;
+  animation: bootDotAnim 1.8s ease-in-out infinite;
+  animation-delay: 0.45s;
+}
+
+.boot-spinner-dot:nth-child(5) {
+  top: 4px;
+  left: 2px;
+  animation: bootDotAnim 1.8s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+@keyframes bootSpinnerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bootDotAnim {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* ===== Windows 11 Bloom Wallpaper (CSS Gradient) ===== */
+.win11-wallpaper {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 120%, #1a6bcf 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 70% 60%, #5e45c0 0%, transparent 50%),
+    radial-gradient(ellipse 60% 50% at 30% 60%, #1e88e5 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 40%, #7c4dff 0%, transparent 40%),
+    linear-gradient(180deg, #001d3d 0%, #003566 40%, #0a1128 100%);
+}
+
+/* Window open animation */
+@keyframes windowOpen {
+  from {
+    opacity: 0;
+    scale: 0.95;
+    translate: 0 8px;
+  }
+
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+.win11-window-open {
+  animation: windowOpen 0.2s ease-out forwards;
+}
+
+/* ===== Selection Highlight ===== */
+::selection {
+  background: rgba(0, 120, 212, 0.3);
+  color: inherit;
+}
+
+/* ===== Utility Animations ===== */
+@keyframes ctxMenuIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes searchMenuIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
